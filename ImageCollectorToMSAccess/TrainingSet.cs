@@ -51,16 +51,22 @@ namespace Face_Recognizer
         private int windowsSize = 0;
         private Double scaleIncreseRate = 1.1;
         private int minimumNighbors = 3;
-     
-
-       
-        
 
 
-        
-       
 
- 
+        Bitmap[] faceList;
+
+        int faceNo = 0;
+
+
+        Image<Bgr, Byte> testImage;
+
+
+
+
+
+
+
 
 
 
@@ -174,17 +180,141 @@ namespace Face_Recognizer
 
         private void buttonBrowse_Click(object sender, EventArgs e)
         {
-            if (openFileDialog.ShowDialog() == DialogResult.OK) {
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+
+
+            {
 
 
 
-                pictureBox1.Image = Image.FromFile(openFileDialog.FileName);
+              Image inputImage = Image.FromFile(openFileDialog.FileName);
 
+
+              testImage = new Image<Bgr, byte>(new Bitmap(inputImage));
+
+                imageBox.Image = testImage;
+
+
+                DetectFaces();
 
                
 
-                buttonSave.Enabled = true;
+
+
             }
+        }
+
+        private void DetectFaces()
+        {
+
+
+
+           
+
+
+                Image<Gray, byte> grayImage = testImage.Convert<Gray, byte>();
+
+
+
+
+                //minimumNighbors = int.Parse(minNeighborComboBox.Text);
+                //scaleIncreseRate = Double.Parse(scaleComboBox.Text);
+                //windowsSize = int.Parse(minDetectionScaleTextBox.Text);
+
+                var faces = grayImage.DetectHaarCascade(haarCascade1, 1.3, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25))[0];
+
+                if (faces.Length > 0)
+                {
+
+
+                    // MessageBox.Show("Total Detected Faces: "+ faces.Length.ToString());
+
+                    Bitmap bitmapInput = grayImage.ToBitmap();
+
+                    Bitmap extractedFace;
+
+                    Graphics facePad;
+
+
+
+                    faceList = new Bitmap[faces.Length];
+
+                    faceNo = 0;
+
+                    foreach (var face in faces)
+
+                    {
+                        testImage.Draw(face.rect, new Bgr(Color.Green), 3);
+
+                        extractedFace = new Bitmap(face.rect.Width, face.rect.Height);
+
+                        facePad = Graphics.FromImage(extractedFace);
+
+                        facePad.DrawImage(bitmapInput, 0, 0, face.rect, GraphicsUnit.Pixel);
+
+
+                        faceList[faceNo] = extractedFace;
+                        faceNo++;
+
+
+                    }
+
+                    imageBox.Image = testImage;
+
+                    MessageBox.Show("Faces Successfully Extracted !!!");
+
+
+
+                    extractedFacepictureBox.Image = faceList[0];
+
+
+                    buttonSave.Enabled = true;
+
+                    faceNametextBox.Enabled = true;
+
+
+                    if (faces.Length > 1)
+
+
+                    {
+
+                        extracedFaceNextbutton.Enabled = true;
+
+                        extracedFacePrebutton.Enabled = true;
+                    }
+
+                    else
+                    {
+
+                        extracedFaceNextbutton.Enabled = false;
+
+                        extracedFacePrebutton.Enabled = false;
+
+                    }
+
+
+
+
+
+
+                }
+
+
+
+                else
+                {
+
+                    MessageBox.Show("No Face Detected!!");
+
+
+                }
+
+
+
+            
+
+
+
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -385,6 +515,9 @@ namespace Face_Recognizer
                     // "Resume" for resuming capture
                     buttonstartLiveCam.Text = "Resume"; //
                     Application.Idle -= processFrameAndUpdateGUI;
+
+                    DetectFaces();
+
                 }
                 else
                 {
@@ -403,68 +536,10 @@ namespace Face_Recognizer
         {
 
 
-            Image<Bgr, Byte> ImageFrame = captureLive.QueryFrame();
-
-            if (ImageFrame != null)
+           testImage = captureLive.QueryFrame();
 
 
-            {
-
-
-                Image<Gray, byte> grayImage = ImageFrame.Convert<Gray, byte>() ;
-
-
-                //minimumNighbors = int.Parse(minNeighborComboBox.Text);
-                //scaleIncreseRate = Double.Parse(scaleComboBox.Text);
-                //windowsSize = int.Parse(minDetectionScaleTextBox.Text);
-
-                var faces = grayImage.DetectHaarCascade(haarCascade1, 1.3, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25))[0];
-
-                if (faces.Length > 0)
-                {
-
-
-                    MessageBox.Show("Total Detected Faces: "+ faces.Length.ToString());
-
-                    Bitmap bitmapInput = grayImage.ToBitmap();
-
-                    Bitmap extractedFace;
-
-                    Graphics facePad;
-
-
-
-
-
-                        foreach (var face in faces)
-
-                        {
-                            ImageFrame.Draw(face.rect, new Bgr(Color.Green), 3);
-
-                                extractedFace = new Bitmap(face.rect.Width,face.rect.Height);
-
-                        facePad = Graphics.FromImage(extractedFace);
-
-                        facePad.DrawImage(bitmapInput,0,0,face.rect,GraphicsUnit.Pixel);
-                                        
-                        }
-
-
-                            imageBox.Image = ImageFrame;
-
-
-                }
-
-                
-
-            }
-
-            
-
-
-
-
-
+            imageBox.Image = testImage;
 
 
         }
@@ -502,6 +577,48 @@ namespace Face_Recognizer
 
         private void imageBox_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void extracedFaceNextbutton_Click(object sender, EventArgs e)
+        {
+
+
+            if(faceNo< faceList.Length-1)
+
+            {
+
+                faceNo++;
+
+                extractedFacepictureBox.Image = faceList[faceNo];
+
+
+            }
+
+            
+
+
+        }
+
+        private void extracedFacePrebutton_Click(object sender, EventArgs e)
+        {
+
+
+            if (faceNo > 0)
+
+
+
+
+            {
+
+
+                faceNo--;
+
+                extractedFacepictureBox.Image = faceList[faceNo];
+
+            }
+
+
 
         }
     }

@@ -44,7 +44,7 @@
             this.extracedFaceNextbutton = new System.Windows.Forms.Button();
             this.extracedFacePrebutton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.faceNametextBox = new System.Windows.Forms.TextBox();
             this.extractedFacepictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.minDetectionScaleTextBox = new System.Windows.Forms.TextBox();
@@ -185,7 +185,7 @@
             this.Face.Controls.Add(this.extracedFaceNextbutton);
             this.Face.Controls.Add(this.extracedFacePrebutton);
             this.Face.Controls.Add(this.label1);
-            this.Face.Controls.Add(this.textBox2);
+            this.Face.Controls.Add(this.faceNametextBox);
             this.Face.Controls.Add(this.extractedFacepictureBox);
             this.Face.Controls.Add(this.buttonSave);
             this.Face.Location = new System.Drawing.Point(484, 232);
@@ -204,6 +204,7 @@
             this.extracedFaceNextbutton.TabIndex = 14;
             this.extracedFaceNextbutton.Text = "Next";
             this.extracedFaceNextbutton.UseVisualStyleBackColor = true;
+            this.extracedFaceNextbutton.Click += new System.EventHandler(this.extracedFaceNextbutton_Click);
             // 
             // extracedFacePrebutton
             // 
@@ -214,6 +215,7 @@
             this.extracedFacePrebutton.TabIndex = 13;
             this.extracedFacePrebutton.Text = "Previous";
             this.extracedFacePrebutton.UseVisualStyleBackColor = true;
+            this.extracedFacePrebutton.Click += new System.EventHandler(this.extracedFacePrebutton_Click);
             // 
             // label1
             // 
@@ -224,19 +226,21 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Person Name:";
             // 
-            // textBox2
+            // faceNametextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(88, 231);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(144, 20);
-            this.textBox2.TabIndex = 12;
+            this.faceNametextBox.Enabled = false;
+            this.faceNametextBox.Location = new System.Drawing.Point(88, 231);
+            this.faceNametextBox.Name = "faceNametextBox";
+            this.faceNametextBox.Size = new System.Drawing.Size(144, 20);
+            this.faceNametextBox.TabIndex = 12;
             // 
             // extractedFacepictureBox
             // 
+            this.extractedFacepictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.extractedFacepictureBox.Location = new System.Drawing.Point(11, 40);
             this.extractedFacepictureBox.Name = "extractedFacepictureBox";
             this.extractedFacepictureBox.Size = new System.Drawing.Size(221, 155);
-            this.extractedFacepictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.extractedFacepictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.extractedFacepictureBox.TabIndex = 12;
             this.extractedFacepictureBox.TabStop = false;
             // 
@@ -364,9 +368,11 @@
             // 
             // imageBox
             // 
+            this.imageBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.imageBox.Location = new System.Drawing.Point(12, 12);
             this.imageBox.Name = "imageBox";
             this.imageBox.Size = new System.Drawing.Size(466, 444);
+            this.imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox.TabIndex = 2;
             this.imageBox.TabStop = false;
             this.imageBox.Click += new System.EventHandler(this.imageBox_Click);
@@ -416,7 +422,7 @@
         private System.Windows.Forms.GroupBox Face;
         private System.Windows.Forms.PictureBox extractedFacepictureBox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox faceNametextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button2;
