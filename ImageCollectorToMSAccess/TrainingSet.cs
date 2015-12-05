@@ -10,22 +10,24 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 
 
-using Emgu.CV;                  //
-using Emgu.CV.CvEnum;           // usual Emgu CV imports
-using Emgu.CV.Structure;        //
-using Emgu.CV.UI;
+
+
 
 using System.Data.SqlClient;
 using System.IO;
 
+using Emgu.CV;
+using Emgu.Util;
 
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
 namespace Face_Recognizer
 {
     public partial class ImageDB : Form
 
     {
 
-
+        
 
 
 
@@ -40,25 +42,28 @@ namespace Face_Recognizer
         int rowNumber=0;
 
 
-        // for Live camera
 
+
+      
+        
         private Capture captureLive;
-        private bool captureInPreogress;
+        private HaarCascade haarCascade1;
+        private int windowsSize = 0;
+        private Double scaleIncreseRate = 1.1;
+        private int minimumNighbors = 3;
+     
+
+       
+        
+
+
+        
+       
+
+ 
 
 
 
-        //private void ProcessFrame(object sender, EventArgs arg) {
-
-        //    Image<Bgr, Byte> ImageFram = captureLive.QueryFrame();
-
-        //    imageBox.Image = ImageFram;
-
-
-        //}
-  
-
-
-        // for live camera
 
 
 
@@ -146,6 +151,11 @@ namespace Face_Recognizer
 
         private void ImageDB_Load(object sender, EventArgs e)
         {
+
+
+
+
+            haarCascade1 = new HaarCascade("haarcascade_frontalface_alt_tree.xml");
 
             ConnectToDatabase();
 
@@ -359,20 +369,7 @@ namespace Face_Recognizer
 
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
+     
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -381,43 +378,130 @@ namespace Face_Recognizer
 
         private void buttonstartLiveCam_Click(object sender, EventArgs e)
         {
-            try
+            if (captureLive != null)
             {
-                captureLive = new Capture(0);
+                if (buttonstartLiveCam.Text == "Pause")
+                {  //if camera is getting frames then pause the capture and set button Text to
+                    // "Resume" for resuming capture
+                    buttonstartLiveCam.Text = "Resume"; //
+                    Application.Idle -= processFrameAndUpdateGUI;
+                }
+                else
+                {
+                    //if camera is NOT getting frames then start the capture and set button
+                    // Text to "Pause" for pausing capture
+                    buttonstartLiveCam.Text = "Pause";
+                    Application.Idle += processFrameAndUpdateGUI;
+                }
+
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("unable to read from webcam, error: " + Environment.NewLine + Environment.NewLine +
-                                ex.Message + Environment.NewLine + Environment.NewLine +
-                                "exiting program");
-                Environment.Exit(0);
-                return;
-            }
-            Application.Idle += processFrameAndUpdateGUI;
+
+
         }
 
         private void processFrameAndUpdateGUI(object sender, EventArgs e)
         {
 
 
-            Mat imgOriginal;
+            Image<Bgr, Byte> ImageFrame = captureLive.QueryFrame();
 
-            imgOriginal = captureLive.QueryFrame();
+            if (ImageFrame != null)
 
-            if (imgOriginal == null)
+
             {
-                MessageBox.Show("unable to read frame from webcam" + Environment.NewLine + Environment.NewLine +
-                                "exiting program");
-                Environment.Exit(0);
-                return;
+
+
+                Image<Gray, byte> grayImage = ImageFrame.Convert<Gray, byte>() ;
+
+
+                //minimumNighbors = int.Parse(minNeighborComboBox.Text);
+                //scaleIncreseRate = Double.Parse(scaleComboBox.Text);
+                //windowsSize = int.Parse(minDetectionScaleTextBox.Text);
+
+                var faces = grayImage.DetectHaarCascade(haarCascade1, 1.3, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25))[0];
+
+                if (faces.Length > 0)
+                {
+
+
+                    MessageBox.Show("Total Detected Faces: "+ faces.Length.ToString());
+
+                    Bitmap bitmapInput = grayImage.ToBitmap();
+
+                    Bitmap extractedFace;
+
+                    Graphics facePad;
+
+
+
+
+
+                        foreach (var face in faces)
+
+                        {
+                            ImageFrame.Draw(face.rect, new Bgr(Color.Green), 3);
+
+                                extractedFace = new Bitmap(face.rect.Width,face.rect.Height);
+
+                        facePad = Graphics.FromImage(extractedFace);
+
+                        facePad.DrawImage(bitmapInput,0,0,face.rect,GraphicsUnit.Pixel);
+                                        
+                        }
+
+
+                            imageBox.Image = ImageFrame;
+
+
+                }
+
+                
+
             }
 
             
 
-            imageBox.Image = imgOriginal;
-            
 
 
+
+
+
+
+        }
+
+        private void selectCamcomboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+
+
+            //Set the camera number to the one selected via combo box
+            int CamNumber = 0;
+            CamNumber = int.Parse(selectCamcomboBox.Text);
+
+            //Start the selected camera
+            #region if capture is not created, create it now
+            if (captureLive == null)
+            {
+                try
+                {
+                    captureLive = new Capture(CamNumber);
+                }
+                catch (NullReferenceException excpt)
+                {
+                    MessageBox.Show(excpt.Message);
+                }
+            }
+            #endregion
+
+            //Start showing the stream from camera
+            buttonstartLiveCam_Click(sender, e);
+
+            buttonstartLiveCam.Enabled = true;   
+
+        }
+
+        private void imageBox_Click(object sender, EventArgs e)
+        {
 
         }
     }

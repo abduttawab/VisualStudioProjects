@@ -41,15 +41,15 @@
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.Face = new System.Windows.Forms.GroupBox();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.extracedFaceNextbutton = new System.Windows.Forms.Button();
+            this.extracedFacePrebutton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.extractedFacepictureBox = new System.Windows.Forms.PictureBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.minDetectionScaleTextBox = new System.Windows.Forms.TextBox();
+            this.minNeighborComboBox = new System.Windows.Forms.ComboBox();
+            this.scaleComboBox = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -61,7 +61,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.Face.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.extractedFacepictureBox)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).BeginInit();
             this.SuspendLayout();
@@ -136,7 +136,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // groupBox1
             // 
@@ -183,11 +182,11 @@
             // 
             // Face
             // 
-            this.Face.Controls.Add(this.button5);
-            this.Face.Controls.Add(this.button4);
+            this.Face.Controls.Add(this.extracedFaceNextbutton);
+            this.Face.Controls.Add(this.extracedFacePrebutton);
             this.Face.Controls.Add(this.label1);
             this.Face.Controls.Add(this.textBox2);
-            this.Face.Controls.Add(this.pictureBox2);
+            this.Face.Controls.Add(this.extractedFacepictureBox);
             this.Face.Controls.Add(this.buttonSave);
             this.Face.Location = new System.Drawing.Point(484, 232);
             this.Face.Name = "Face";
@@ -196,23 +195,25 @@
             this.Face.TabStop = false;
             this.Face.Text = "Face Adder";
             // 
-            // button5
+            // extracedFaceNextbutton
             // 
-            this.button5.Location = new System.Drawing.Point(148, 201);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(84, 23);
-            this.button5.TabIndex = 14;
-            this.button5.Text = "Next";
-            this.button5.UseVisualStyleBackColor = true;
+            this.extracedFaceNextbutton.Enabled = false;
+            this.extracedFaceNextbutton.Location = new System.Drawing.Point(148, 201);
+            this.extracedFaceNextbutton.Name = "extracedFaceNextbutton";
+            this.extracedFaceNextbutton.Size = new System.Drawing.Size(84, 23);
+            this.extracedFaceNextbutton.TabIndex = 14;
+            this.extracedFaceNextbutton.Text = "Next";
+            this.extracedFaceNextbutton.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // extracedFacePrebutton
             // 
-            this.button4.Location = new System.Drawing.Point(11, 201);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(89, 23);
-            this.button4.TabIndex = 13;
-            this.button4.Text = "Previous";
-            this.button4.UseVisualStyleBackColor = true;
+            this.extracedFacePrebutton.Enabled = false;
+            this.extracedFacePrebutton.Location = new System.Drawing.Point(11, 201);
+            this.extracedFacePrebutton.Name = "extracedFacePrebutton";
+            this.extracedFacePrebutton.Size = new System.Drawing.Size(89, 23);
+            this.extracedFacePrebutton.TabIndex = 13;
+            this.extracedFacePrebutton.Text = "Previous";
+            this.extracedFacePrebutton.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -222,7 +223,6 @@
             this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 12;
             this.label1.Text = "Person Name:";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // textBox2
             // 
@@ -231,20 +231,20 @@
             this.textBox2.Size = new System.Drawing.Size(144, 20);
             this.textBox2.TabIndex = 12;
             // 
-            // pictureBox2
+            // extractedFacepictureBox
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(11, 40);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(221, 155);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox2.TabIndex = 12;
-            this.pictureBox2.TabStop = false;
+            this.extractedFacepictureBox.Location = new System.Drawing.Point(11, 40);
+            this.extractedFacepictureBox.Name = "extractedFacepictureBox";
+            this.extractedFacepictureBox.Size = new System.Drawing.Size(221, 155);
+            this.extractedFacepictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.extractedFacepictureBox.TabIndex = 12;
+            this.extractedFacepictureBox.TabStop = false;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.comboBox3);
-            this.groupBox2.Controls.Add(this.comboBox2);
+            this.groupBox2.Controls.Add(this.minDetectionScaleTextBox);
+            this.groupBox2.Controls.Add(this.minNeighborComboBox);
+            this.groupBox2.Controls.Add(this.scaleComboBox);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label4);
@@ -255,28 +255,39 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tune Detection Parameters";
             // 
-            // textBox3
+            // minDetectionScaleTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(148, 155);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(121, 20);
-            this.textBox3.TabIndex = 5;
+            this.minDetectionScaleTextBox.Location = new System.Drawing.Point(148, 155);
+            this.minDetectionScaleTextBox.Name = "minDetectionScaleTextBox";
+            this.minDetectionScaleTextBox.Size = new System.Drawing.Size(121, 20);
+            this.minDetectionScaleTextBox.TabIndex = 5;
+            this.minDetectionScaleTextBox.Text = "3";
             // 
-            // comboBox3
+            // minNeighborComboBox
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(148, 109);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 4;
+            this.minNeighborComboBox.FormattingEnabled = true;
+            this.minNeighborComboBox.Items.AddRange(new object[] {
+            "2",
+            "3",
+            "4"});
+            this.minNeighborComboBox.Location = new System.Drawing.Point(148, 109);
+            this.minNeighborComboBox.Name = "minNeighborComboBox";
+            this.minNeighborComboBox.Size = new System.Drawing.Size(121, 21);
+            this.minNeighborComboBox.TabIndex = 4;
+            this.minNeighborComboBox.Text = "1";
             // 
-            // comboBox2
+            // scaleComboBox
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(148, 73);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 3;
+            this.scaleComboBox.FormattingEnabled = true;
+            this.scaleComboBox.Items.AddRange(new object[] {
+            "1.2",
+            "1.3",
+            "1.4"});
+            this.scaleComboBox.Location = new System.Drawing.Point(148, 73);
+            this.scaleComboBox.Name = "scaleComboBox";
+            this.scaleComboBox.Size = new System.Drawing.Size(121, 21);
+            this.scaleComboBox.TabIndex = 3;
+            this.scaleComboBox.Text = "1.1";
             // 
             // label6
             // 
@@ -319,6 +330,7 @@
             // buttonstartLiveCam
             // 
             this.buttonstartLiveCam.BackColor = System.Drawing.Color.Red;
+            this.buttonstartLiveCam.Enabled = false;
             this.buttonstartLiveCam.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.buttonstartLiveCam.Location = new System.Drawing.Point(312, 488);
             this.buttonstartLiveCam.Name = "buttonstartLiveCam";
@@ -331,10 +343,15 @@
             // selectCamcomboBox
             // 
             this.selectCamcomboBox.FormattingEnabled = true;
+            this.selectCamcomboBox.Items.AddRange(new object[] {
+            "0",
+            "1"});
             this.selectCamcomboBox.Location = new System.Drawing.Point(216, 489);
             this.selectCamcomboBox.Name = "selectCamcomboBox";
             this.selectCamcomboBox.Size = new System.Drawing.Size(90, 21);
             this.selectCamcomboBox.TabIndex = 16;
+            this.selectCamcomboBox.Text = "None";
+            this.selectCamcomboBox.SelectedIndexChanged += new System.EventHandler(this.selectCamcomboBox_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -344,7 +361,6 @@
             this.label3.Size = new System.Drawing.Size(79, 13);
             this.label3.TabIndex = 17;
             this.label3.Text = "Select Camera:";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // imageBox
             // 
@@ -353,6 +369,7 @@
             this.imageBox.Size = new System.Drawing.Size(466, 444);
             this.imageBox.TabIndex = 2;
             this.imageBox.TabStop = false;
+            this.imageBox.Click += new System.EventHandler(this.imageBox_Click);
             // 
             // ImageDB
             // 
@@ -376,7 +393,7 @@
             this.groupBox1.PerformLayout();
             this.Face.ResumeLayout(false);
             this.Face.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.extractedFacepictureBox)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.imageBox)).EndInit();
@@ -397,7 +414,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.GroupBox Face;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox extractedFacepictureBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
@@ -406,14 +423,14 @@
         private System.Windows.Forms.Button buttonstartLiveCam;
         private System.Windows.Forms.ComboBox selectCamcomboBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.TextBox minDetectionScaleTextBox;
+        private System.Windows.Forms.ComboBox minNeighborComboBox;
+        private System.Windows.Forms.ComboBox scaleComboBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button extracedFaceNextbutton;
+        private System.Windows.Forms.Button extracedFacePrebutton;
         private Emgu.CV.UI.ImageBox imageBox;
     }
 }
