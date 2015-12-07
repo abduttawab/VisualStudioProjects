@@ -37,9 +37,11 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.goToLastImageButton = new System.Windows.Forms.Button();
+            this.goToFirstImageButton = new System.Windows.Forms.Button();
+            this.PersonNamelabel = new System.Windows.Forms.Label();
+            this.updateFaceNameButton = new System.Windows.Forms.Button();
+            this.importedFaceNametextBox = new System.Windows.Forms.TextBox();
             this.Face = new System.Windows.Forms.GroupBox();
             this.extracedFaceNextbutton = new System.Windows.Forms.Button();
             this.extracedFacePrebutton = new System.Windows.Forms.Button();
@@ -73,7 +75,7 @@
             this.buttonPre.Name = "buttonPre";
             this.buttonPre.Size = new System.Drawing.Size(39, 23);
             this.buttonPre.TabIndex = 4;
-            this.buttonPre.Text = "Previous";
+            this.buttonPre.Text = "<";
             this.buttonPre.UseVisualStyleBackColor = true;
             this.buttonPre.Click += new System.EventHandler(this.buttonPre_Click);
             // 
@@ -84,7 +86,7 @@
             this.buttonNext.Name = "buttonNext";
             this.buttonNext.Size = new System.Drawing.Size(39, 23);
             this.buttonNext.TabIndex = 5;
-            this.buttonNext.Text = "Next";
+            this.buttonNext.Text = ">";
             this.buttonNext.UseVisualStyleBackColor = true;
             this.buttonNext.Click += new System.EventHandler(this.buttonNext_Click);
             // 
@@ -139,9 +141,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.button1);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.goToLastImageButton);
+            this.groupBox1.Controls.Add(this.goToFirstImageButton);
+            this.groupBox1.Controls.Add(this.PersonNamelabel);
+            this.groupBox1.Controls.Add(this.updateFaceNameButton);
+            this.groupBox1.Controls.Add(this.importedFaceNametextBox);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.buttonDelete);
             this.groupBox1.Controls.Add(this.buttonNext);
@@ -153,32 +157,53 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Traning Set Viewer";
             // 
-            // label2
+            // goToLastImageButton
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 237);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Person Name:";
+            this.goToLastImageButton.Enabled = false;
+            this.goToLastImageButton.Location = new System.Drawing.Point(202, 201);
+            this.goToLastImageButton.Name = "goToLastImageButton";
+            this.goToLastImageButton.Size = new System.Drawing.Size(25, 23);
+            this.goToLastImageButton.TabIndex = 15;
+            this.goToLastImageButton.Text = ">|";
+            this.goToLastImageButton.UseVisualStyleBackColor = true;
+            this.goToLastImageButton.Click += new System.EventHandler(this.goToLastImageButton_Click);
             // 
-            // button1
+            // goToFirstImageButton
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.button1.Location = new System.Drawing.Point(9, 257);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(218, 23);
-            this.button1.TabIndex = 11;
-            this.button1.Text = "Update Face";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.goToFirstImageButton.Location = new System.Drawing.Point(5, 201);
+            this.goToFirstImageButton.Name = "goToFirstImageButton";
+            this.goToFirstImageButton.Size = new System.Drawing.Size(39, 23);
+            this.goToFirstImageButton.TabIndex = 14;
+            this.goToFirstImageButton.Text = "|<";
+            this.goToFirstImageButton.UseVisualStyleBackColor = true;
+            this.goToFirstImageButton.Click += new System.EventHandler(this.goToFirstImageButton_Click);
             // 
-            // textBox1
+            // PersonNamelabel
             // 
-            this.textBox1.Location = new System.Drawing.Point(86, 230);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(141, 20);
-            this.textBox1.TabIndex = 10;
+            this.PersonNamelabel.AutoSize = true;
+            this.PersonNamelabel.Location = new System.Drawing.Point(6, 237);
+            this.PersonNamelabel.Name = "PersonNamelabel";
+            this.PersonNamelabel.Size = new System.Drawing.Size(74, 13);
+            this.PersonNamelabel.TabIndex = 13;
+            this.PersonNamelabel.Text = "Person Name:";
+            // 
+            // updateFaceNameButton
+            // 
+            this.updateFaceNameButton.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.updateFaceNameButton.Location = new System.Drawing.Point(9, 257);
+            this.updateFaceNameButton.Name = "updateFaceNameButton";
+            this.updateFaceNameButton.Size = new System.Drawing.Size(218, 23);
+            this.updateFaceNameButton.TabIndex = 11;
+            this.updateFaceNameButton.Text = "Update Face";
+            this.updateFaceNameButton.UseVisualStyleBackColor = false;
+            this.updateFaceNameButton.Click += new System.EventHandler(this.updateFaceNameButton_Click);
+            // 
+            // importedFaceNametextBox
+            // 
+            this.importedFaceNametextBox.Location = new System.Drawing.Point(86, 230);
+            this.importedFaceNametextBox.Name = "importedFaceNametextBox";
+            this.importedFaceNametextBox.Size = new System.Drawing.Size(141, 20);
+            this.importedFaceNametextBox.TabIndex = 10;
             // 
             // Face
             // 
@@ -417,13 +442,13 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button updateFaceNameButton;
+        private System.Windows.Forms.TextBox importedFaceNametextBox;
         private System.Windows.Forms.GroupBox Face;
         private System.Windows.Forms.PictureBox extractedFacepictureBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox faceNametextBox;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label PersonNamelabel;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button buttonstartLiveCam;
@@ -438,6 +463,8 @@
         private System.Windows.Forms.Button extracedFaceNextbutton;
         private System.Windows.Forms.Button extracedFacePrebutton;
         private Emgu.CV.UI.ImageBox imageBox;
+        private System.Windows.Forms.Button goToLastImageButton;
+        private System.Windows.Forms.Button goToFirstImageButton;
     }
 }
 

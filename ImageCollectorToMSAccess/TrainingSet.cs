@@ -40,17 +40,18 @@ namespace Face_Recognizer
 
         int rowPosition= 0;
         int rowNumber=0;
-
-
-
-
-      
         
+
+
+
+
+
+
         private Capture captureLive;
         private HaarCascade haarCascade1;
-        private int windowsSize = 0;
-        private Double scaleIncreseRate = 1.1;
-        private int minimumNighbors = 3;
+        //private int windowsSize = 0;
+        //private Double scaleIncreseRate = 1.1;
+        //private int minimumNighbors = 3;
 
 
 
@@ -139,6 +140,7 @@ namespace Face_Recognizer
                 rowNumber--;
 
                 pictureBox1.Image = ReadImageFromDB();
+                importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
 
 
             }
@@ -166,13 +168,9 @@ namespace Face_Recognizer
             ConnectToDatabase();
 
 
-            refreshDBconnection();
+            
 
-            rowNumber = 0;
-            pictureBox1.Image = ReadImageFromDB();
-            buttonNext.Enabled = true;
-            buttonPre.Enabled = true;
-            buttonDelete.Enabled = true;
+           
 
 
 
@@ -322,7 +320,7 @@ namespace Face_Recognizer
 
             try
             {
-                StoreData(ConverImageToByte(pictureBox1.Image));
+                StoreData(extractedFacepictureBox.Image, faceNametextBox.Text);
 
             }
 
@@ -338,30 +336,10 @@ namespace Face_Recognizer
            
         }
 
-      
-
-        private byte[] ConverImageToByte(Image inputImage)
-        {
 
 
-            
 
-          var bitmapimage = new Bitmap(inputImage);
-
-
-            MemoryStream Mystream = new MemoryStream();
-
-
-         bitmapimage.Save(Mystream, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            byte[] byteImage = Mystream.ToArray();
-
-            return byteImage;
-
-        }
-
-
-        private void StoreData(byte[] byteImage)
+        private void StoreData(Image inputFace, string PersonName)
         {
 
             if (dbConnection.State.Equals(ConnectionState.Closed))
@@ -372,23 +350,33 @@ namespace Face_Recognizer
                 try
                 {
 
+
+                    byte[] FaceAsByte = ConverImageToByte(inputFace);
+
+
+                    rowPosition = localDataTable.Rows.Count;
+                    rowPosition++;
+
+
                     MessageBox.Show("Saving Image at Index:" + rowPosition.ToString());
 
-                    SqlCommand InsertCommand = new SqlCommand("INSERT INTO pictureData (ImageID, Image) VALUES('"+rowPosition.ToString()+"',@MyImage)", dbConnection);
+                    SqlCommand InsertCommand = new SqlCommand("INSERT INTO pictureData (ImageID, Image, PersonName) VALUES('" + rowPosition.ToString() + "',@MyImage,'" + PersonName + "' )", dbConnection);
 
 
-                    InsertCommand.Parameters.AddWithValue("@MyImage", byteImage);
+                   // InsertCommand.Parameters.AddWithValue("@MyImage", inputFace);
 
-                  
+                   SqlParameter imageParameter = InsertCommand.Parameters.AddWithValue("@MyImage", inputFace);
+                    imageParameter.Value = FaceAsByte;
+                    imageParameter.Size = FaceAsByte.Length;
 
-                 int rowAffected = InsertCommand.ExecuteNonQuery();
+                    int rowAffected = InsertCommand.ExecuteNonQuery();
 
-                MessageBox.Show("Image Data Successfully Uploaded in " + rowAffected.ToString() + "row");
+                    MessageBox.Show("Image Data Successfully Uploaded in " + rowAffected.ToString() + "row");
 
                     rowPosition++;
 
 
-                }
+                }   
 
                 catch (Exception ex)
                 {
@@ -410,11 +398,53 @@ namespace Face_Recognizer
 
 
             }
-              
 
 
 
+
+        }
+
+
+
+
+        private byte[] ConverImageToByte(Image inputImage)
+        {
+
+
+
+
+
+
+            byte[] byteArray = new byte[0];
+            using (MemoryStream stream = new MemoryStream())
+            {
+                inputImage.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                stream.Close();
+
+                byteArray = stream.ToArray();
             }
+            return byteArray;
+
+
+
+
+
+            // var bitmapimage = new Bitmap(inputImage);
+
+
+            //   MemoryStream Mystream = new MemoryStream();
+
+
+            //bitmapimage.Save(Mystream, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+            //   byte[] byteImage = Mystream.ToArray();
+
+            //   return byteImage;
+
+        }
+
+
+       
 
         private void refreshDBconnection()
         {
@@ -441,7 +471,7 @@ namespace Face_Recognizer
             if (rowNumber >= 0)
             {
 
-                byte[] fetchImageBytes = (byte[])localDataTable.Rows[rowNumber]["Image"];
+                 byte[] fetchImageBytes = (byte[])localDataTable.Rows[rowNumber]["Image"];
 
                 MemoryStream memoryStream2 = new MemoryStream(fetchImageBytes);
 
@@ -475,6 +505,8 @@ namespace Face_Recognizer
                 rowNumber++;
                 pictureBox1.Image = ReadImageFromDB();
 
+                importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
+
 
             }
 
@@ -494,6 +526,8 @@ namespace Face_Recognizer
                 rowNumber--;
                 pictureBox1.Image = ReadImageFromDB();
 
+                importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
+
             }
 
 
@@ -501,11 +535,7 @@ namespace Face_Recognizer
 
      
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
+       
         private void buttonstartLiveCam_Click(object sender, EventArgs e)
         {
             if (captureLive != null)
@@ -618,6 +648,80 @@ namespace Face_Recognizer
 
             }
 
+
+
+        }
+
+        private void goToFirstImageButton_Click(object sender, EventArgs e)
+        {
+
+
+            refreshDBconnection();
+            rowNumber = 0;
+            pictureBox1.Image = ReadImageFromDB();
+
+            importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
+
+            PersonNamelabel.Text ="Person Number" +(rowNumber + 1).ToString();
+
+            MessageBox.Show("You Have Reached The First Image In List!!!");
+
+            buttonNext.Enabled = true;
+            buttonPre.Enabled = true;
+            buttonDelete.Enabled = true;
+            goToLastImageButton.Enabled = true;
+
+
+        }
+
+        private void goToLastImageButton_Click(object sender, EventArgs e)
+        {
+            int totalRows = localDataTable.Rows.Count;
+
+
+            refreshDBconnection();
+            rowNumber = totalRows-1;
+            pictureBox1.Image = ReadImageFromDB();
+
+           importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
+
+            
+
+            MessageBox.Show("You Have Reached The First Image In List!!!");
+
+        }
+
+        private void updateFaceNameButton_Click(object sender, EventArgs e)
+        {
+
+
+           
+
+
+            try {
+
+
+                localDataTable.Rows[rowNumber]["PersonName"] = importedFaceNametextBox.Text;
+
+                dataAdater.Update(localDataTable);
+
+                MessageBox.Show("Successfully Updated!!!");
+
+
+
+            }
+
+            catch (Exception ex) {
+
+
+                MessageBox.Show(ex.StackTrace.ToString());
+                MessageBox.Show(ex.ToString());
+
+            }
+
+           
+
+           
 
 
         }
