@@ -85,7 +85,9 @@ namespace Face_Recognizer
 
             dataAdater = new SqlDataAdapter("Select * from pictureData", dbConnection);
 
-           
+            SqlCommandBuilder sqlBuilder = new SqlCommandBuilder(dataAdater);
+
+            dataAdater.UpdateCommand = sqlBuilder.GetUpdateCommand(true);
 
 
             dataAdater.Fill(localDataTable);
@@ -506,6 +508,7 @@ namespace Face_Recognizer
                 pictureBox1.Image = ReadImageFromDB();
 
                 importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
+                PersonNamelabel.Text = (rowNumber + 1).ToString();
 
 
             }
@@ -527,6 +530,7 @@ namespace Face_Recognizer
                 pictureBox1.Image = ReadImageFromDB();
 
                 importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
+                PersonNamelabel.Text = (rowNumber + 1).ToString();
 
             }
 
@@ -662,7 +666,7 @@ namespace Face_Recognizer
 
             importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
 
-            PersonNamelabel.Text ="Person Number" +(rowNumber + 1).ToString();
+            PersonNamelabel.Text =(rowNumber + 1).ToString();
 
             MessageBox.Show("You Have Reached The First Image In List!!!");
 
@@ -684,8 +688,9 @@ namespace Face_Recognizer
             pictureBox1.Image = ReadImageFromDB();
 
            importedFaceNametextBox.Text = localDataTable.Rows[rowNumber]["PersonName"].ToString();
+            PersonNamelabel.Text = (rowNumber + 1).ToString();
 
-            
+
 
             MessageBox.Show("You Have Reached The First Image In List!!!");
 
@@ -700,8 +705,13 @@ namespace Face_Recognizer
 
             try {
 
+                PersonNamelabel.Text = (rowNumber + 1).ToString();
 
                 localDataTable.Rows[rowNumber]["PersonName"] = importedFaceNametextBox.Text;
+
+                
+
+
 
                 dataAdater.Update(localDataTable);
 

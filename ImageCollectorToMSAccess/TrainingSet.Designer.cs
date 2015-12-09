@@ -60,6 +60,7 @@
             this.selectCamcomboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.imageBox = new Emgu.CV.UI.ImageBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.Face.SuspendLayout();
@@ -141,6 +142,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.goToLastImageButton);
             this.groupBox1.Controls.Add(this.goToFirstImageButton);
             this.groupBox1.Controls.Add(this.PersonNamelabel);
@@ -181,11 +183,10 @@
             // PersonNamelabel
             // 
             this.PersonNamelabel.AutoSize = true;
-            this.PersonNamelabel.Location = new System.Drawing.Point(6, 237);
+            this.PersonNamelabel.Location = new System.Drawing.Point(92, 233);
             this.PersonNamelabel.Name = "PersonNamelabel";
-            this.PersonNamelabel.Size = new System.Drawing.Size(74, 13);
+            this.PersonNamelabel.Size = new System.Drawing.Size(0, 13);
             this.PersonNamelabel.TabIndex = 13;
-            this.PersonNamelabel.Text = "Person Name:";
             // 
             // updateFaceNameButton
             // 
@@ -200,9 +201,9 @@
             // 
             // importedFaceNametextBox
             // 
-            this.importedFaceNametextBox.Location = new System.Drawing.Point(86, 230);
+            this.importedFaceNametextBox.Location = new System.Drawing.Point(123, 230);
             this.importedFaceNametextBox.Name = "importedFaceNametextBox";
-            this.importedFaceNametextBox.Size = new System.Drawing.Size(141, 20);
+            this.importedFaceNametextBox.Size = new System.Drawing.Size(104, 20);
             this.importedFaceNametextBox.TabIndex = 10;
             // 
             // Face
@@ -402,6 +403,15 @@
             this.imageBox.TabStop = false;
             this.imageBox.Click += new System.EventHandler(this.imageBox_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(2, 234);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Person Name:";
+            // 
             // ImageDB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -465,6 +475,7 @@
         private Emgu.CV.UI.ImageBox imageBox;
         private System.Windows.Forms.Button goToLastImageButton;
         private System.Windows.Forms.Button goToFirstImageButton;
+        private System.Windows.Forms.Label label2;
     }
 }
 
