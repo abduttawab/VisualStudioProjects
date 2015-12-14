@@ -49,6 +49,7 @@ namespace Face_Recognizer
 
         private Capture captureLive;
         private HaarCascade haarCascade1;
+
         //private int windowsSize = 0;
         //private Double scaleIncreseRate = 1.1;
         //private int minimumNighbors = 3;
@@ -431,17 +432,7 @@ namespace Face_Recognizer
 
 
 
-            // var bitmapimage = new Bitmap(inputImage);
-
-
-            //   MemoryStream Mystream = new MemoryStream();
-
-
-            //bitmapimage.Save(Mystream, System.Drawing.Imaging.ImageFormat.Jpeg);
-
-            //   byte[] byteImage = Mystream.ToArray();
-
-            //   return byteImage;
+          
 
         }
 
@@ -572,6 +563,30 @@ namespace Face_Recognizer
 
            testImage = captureLive.QueryFrame();
 
+            if (testImage != null)
+
+
+
+            {
+
+                Image<Gray, byte> grayFrame = testImage.Convert<Gray, byte>();
+
+                var  faces = grayFrame.DetectHaarCascade(haarCascade1, 1.3, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25))[0];
+
+
+                foreach (var face in faces)
+
+                {
+                    testImage.Draw(face.rect, new Bgr(Color.Green), 3);
+
+                   
+
+
+                }
+
+
+            }
+
 
             imageBox.Image = testImage;
 
@@ -594,6 +609,7 @@ namespace Face_Recognizer
                 try
                 {
                     captureLive = new Capture(CamNumber);
+                    
                 }
                 catch (NullReferenceException excpt)
                 {
@@ -707,15 +723,23 @@ namespace Face_Recognizer
 
                 PersonNamelabel.Text = (rowNumber + 1).ToString();
 
-                localDataTable.Rows[rowNumber]["PersonName"] = importedFaceNametextBox.Text;
+
 
                 
 
+                localDataTable.Rows[rowNumber]["PersonName"] = importedFaceNametextBox.Text;
+
+                SqlCommandBuilder commandBuilder2 = new SqlCommandBuilder(dataAdater);
+
+
+                MessageBox.Show("Successfully Updated!!!");
 
 
                 dataAdater.Update(localDataTable);
 
-                MessageBox.Show("Successfully Updated!!!");
+                refreshDBconnection();
+
+              
 
 
 
@@ -724,7 +748,7 @@ namespace Face_Recognizer
             catch (Exception ex) {
 
 
-                MessageBox.Show(ex.StackTrace.ToString());
+              
                 MessageBox.Show(ex.ToString());
 
             }
