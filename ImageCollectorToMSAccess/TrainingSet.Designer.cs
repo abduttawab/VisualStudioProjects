@@ -401,7 +401,7 @@
             this.imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox.TabIndex = 2;
             this.imageBox.TabStop = false;
-            this.imageBox.Click += new System.EventHandler(this.imageBox_Click);
+            
             // 
             // label2
             // 
@@ -428,7 +428,7 @@
             this.Controls.Add(this.browseButton);
             this.Name = "ImageDB";
             this.Text = "Training Set";
-            this.Load += new System.EventHandler(this.ImageDB_Load);
+            this.Load += new System.EventHandler(ImageDB_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
