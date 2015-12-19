@@ -1,6 +1,6 @@
 ﻿namespace Face_Recognizer
 {
-    partial class ImageDB
+    partial class TrainingSetWindow
     {
         /// <summary>
         /// Required designer variable.
@@ -37,6 +37,7 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.goToLastImageButton = new System.Windows.Forms.Button();
             this.goToFirstImageButton = new System.Windows.Forms.Button();
             this.PersonNamelabel = new System.Windows.Forms.Label();
@@ -55,12 +56,11 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
+            this.recognizerButton = new System.Windows.Forms.Button();
             this.buttonstartLiveCam = new System.Windows.Forms.Button();
             this.selectCamcomboBox = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.imageBox = new Emgu.CV.UI.ImageBox();
-            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.Face.SuspendLayout();
@@ -158,6 +158,15 @@
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Traning Set Viewer";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(2, 234);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(74, 13);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "Person Name:";
             // 
             // goToLastImageButton
             // 
@@ -346,16 +355,17 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Sacle Increase Rate:";
             // 
-            // button2
+            // recognizerButton
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(814, 48);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(128, 105);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "Load Recognizer";
-            this.button2.UseVisualStyleBackColor = false;
+            this.recognizerButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.recognizerButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.recognizerButton.Location = new System.Drawing.Point(814, 48);
+            this.recognizerButton.Name = "recognizerButton";
+            this.recognizerButton.Size = new System.Drawing.Size(128, 105);
+            this.recognizerButton.TabIndex = 13;
+            this.recognizerButton.Text = "Load Recognizer";
+            this.recognizerButton.UseVisualStyleBackColor = false;
+            this.recognizerButton.Click += new System.EventHandler(this.recognizerButton_Click);
             // 
             // buttonstartLiveCam
             // 
@@ -401,18 +411,8 @@
             this.imageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.imageBox.TabIndex = 2;
             this.imageBox.TabStop = false;
-            
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(2, 234);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(74, 13);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "Person Name:";
-            // 
-            // ImageDB
+            // TrainingSetWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -421,14 +421,14 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.selectCamcomboBox);
             this.Controls.Add(this.buttonstartLiveCam);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.recognizerButton);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.Face);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.browseButton);
-            this.Name = "ImageDB";
+            this.Name = "TrainingSetWindow";
             this.Text = "Training Set";
-            this.Load += new System.EventHandler(ImageDB_Load);
+            this.Load += new System.EventHandler(this.ImageDB_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -460,7 +460,7 @@
         private System.Windows.Forms.TextBox faceNametextBox;
         private System.Windows.Forms.Label PersonNamelabel;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button recognizerButton;
         private System.Windows.Forms.Button buttonstartLiveCam;
         private System.Windows.Forms.ComboBox selectCamcomboBox;
         private System.Windows.Forms.Label label3;

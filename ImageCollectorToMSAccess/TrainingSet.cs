@@ -15,6 +15,7 @@ using System.Drawing.Imaging;
 
 using System.Data.SqlClient;
 using System.IO;
+using System.Diagnostics;
 
 using Emgu.CV;
 using Emgu.Util;
@@ -22,10 +23,11 @@ using Emgu.Util;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
 using Emgu.CV.UI;
+using ImageCollectorToMSAccess;
 
 namespace Face_Recognizer
 {
-    public partial class ImageDB : Form
+    public partial class TrainingSetWindow : Form
 
     {
         
@@ -33,25 +35,12 @@ namespace Face_Recognizer
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private readonly TrainingSetDBGateWay trainingSetDbGateWay;
         private readonly StoreDataToDB storeDataToDb;
-       
+
+
+        Image<Gray, byte> result;
+
 
         public TrainingSetDBGateWay TrainingSetDbGateWay
         {
@@ -63,10 +52,7 @@ namespace Face_Recognizer
             get { return storeDataToDb; }
         }
 
-        //public FaceDetectionProcess FaceDetectionProcess
-        //{
-        //    get { return faceDetectionProcess; }
-        //}
+       
 
 
 
@@ -129,6 +115,8 @@ namespace Face_Recognizer
             //scaleIncreseRate = Double.Parse(scaleComboBox.Text);
             //windowsSize = int.Parse(minDetectionScaleTextBox.Text);
 
+            
+
             var faces = grayImage.DetectHaarCascade(haarCascade1, 1.3, 4, HAAR_DETECTION_TYPE.DO_CANNY_PRUNING, new Size(25, 25))[0];
 
             if (faces.Length > 0)
@@ -160,6 +148,8 @@ namespace Face_Recognizer
 
                     facePad.DrawImage(bitmapInput, 0, 0, face.rect, GraphicsUnit.Pixel);
 
+
+                   
 
                     faceList[faceNo] = extractedFace;
                     faceNo++;
@@ -297,7 +287,7 @@ namespace Face_Recognizer
         }
 
 
-        public ImageDB()
+        public TrainingSetWindow()
         {
             InitializeComponent();
             trainingSetDbGateWay = new TrainingSetDBGateWay();
@@ -619,6 +609,24 @@ namespace Face_Recognizer
            
 
            
+
+
+        }
+
+        private void recognizerButton_Click(object sender, EventArgs e)
+        {
+
+
+           
+
+            RecognizerWindow recognizerWindow1 = new RecognizerWindow();
+
+           
+
+            recognizerWindow1.Show();
+
+
+            Hide();
 
 
         }

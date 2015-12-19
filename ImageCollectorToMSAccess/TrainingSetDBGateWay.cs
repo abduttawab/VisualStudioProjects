@@ -121,6 +121,38 @@ namespace Face_Recognizer
 
 
 
+        public Image ReadAllImageFromDB(DataRow rowno)
+        {
+            Image fectImage;
+
+            if (rowNumber >= 0)
+            {
+
+                byte[] fetchImageBytes = (byte[])rowno["Image"];
+
+                MemoryStream memoryStream2 = new MemoryStream(fetchImageBytes);
+
+                fectImage = Image.FromStream(memoryStream2);
+
+                return fectImage;
+
+
+
+
+            }
+
+
+            else
+            {
+
+                MessageBox.Show("There is no image in the Database. Pleace Reconnect Or insert some image.");
+                return null;
+            }
+        }
+
+
+
+
 
         private void StoreData(Image inputFace, string PersonName)
         {

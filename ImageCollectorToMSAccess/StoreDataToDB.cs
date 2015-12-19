@@ -9,20 +9,20 @@ namespace Face_Recognizer
 {
     public class StoreDataToDB
     {
-        private ImageDB imageDb;
+        private TrainingSetWindow trainingSetWindow;
 
-        public StoreDataToDB(ImageDB imageDb)
+        public StoreDataToDB(TrainingSetWindow trainingSetWindow)
         {
-            this.imageDb = imageDb;
+            this.trainingSetWindow = trainingSetWindow;
         }
 
         public void StoreData(Image inputFace, string PersonName)
         {
 
-            if (imageDb.TrainingSetDbGateWay.DbConnection.State.Equals(ConnectionState.Closed))
+            if (trainingSetWindow.TrainingSetDbGateWay.DbConnection.State.Equals(ConnectionState.Closed))
 
             {
-                imageDb.TrainingSetDbGateWay.DbConnection.Open();
+                trainingSetWindow.TrainingSetDbGateWay.DbConnection.Open();
                 try
                 {
 
@@ -30,13 +30,13 @@ namespace Face_Recognizer
                     byte[] FaceAsByte = ConverImageToByte(inputFace);
 
 
-                    imageDb.TrainingSetDbGateWay.RowPosition = imageDb.TrainingSetDbGateWay.LocalDataTable.Rows.Count;
-                    imageDb.TrainingSetDbGateWay.RowPosition++;
+                    trainingSetWindow.TrainingSetDbGateWay.RowPosition = trainingSetWindow.TrainingSetDbGateWay.LocalDataTable.Rows.Count;
+                    trainingSetWindow.TrainingSetDbGateWay.RowPosition++;
 
 
-                    MessageBox.Show("Saving Image at Index:" + imageDb.TrainingSetDbGateWay.RowPosition.ToString());
+                    MessageBox.Show("Saving Image at Index:" + trainingSetWindow.TrainingSetDbGateWay.RowPosition.ToString());
 
-                    SqlCommand InsertCommand = new SqlCommand("INSERT INTO pictureData (ImageID, Image, PersonName) VALUES('" + imageDb.TrainingSetDbGateWay.RowPosition.ToString() + "',@MyImage,'" + PersonName + "' )", imageDb.TrainingSetDbGateWay.DbConnection);
+                    SqlCommand InsertCommand = new SqlCommand("INSERT INTO pictureData (ImageID, Image, PersonName) VALUES('" + trainingSetWindow.TrainingSetDbGateWay.RowPosition.ToString() + "',@MyImage,'" + PersonName + "' )", trainingSetWindow.TrainingSetDbGateWay.DbConnection);
 
 
                     // InsertCommand.Parameters.AddWithValue("@MyImage", inputFace);
@@ -49,7 +49,7 @@ namespace Face_Recognizer
 
                     MessageBox.Show("Image Data Successfully Uploaded in " + rowAffected.ToString() + "row");
 
-                    imageDb.TrainingSetDbGateWay.RowPosition++;
+                    trainingSetWindow.TrainingSetDbGateWay.RowPosition++;
 
 
                 }   
@@ -65,7 +65,7 @@ namespace Face_Recognizer
 
                 finally
                 {
-                    imageDb.TrainingSetDbGateWay.refreshDBconnection();
+                    trainingSetWindow.TrainingSetDbGateWay.refreshDBconnection();
 
                 }
 

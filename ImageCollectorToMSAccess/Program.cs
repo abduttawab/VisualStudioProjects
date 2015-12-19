@@ -16,7 +16,7 @@ namespace Face_Recognizer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ImageDB());
+            Application.Run(new TrainingSetWindow());
         }
     }
 }
